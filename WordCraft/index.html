@@ -23,9 +23,27 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
     #wordcraft_loading { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
       color: #555; font: 14px system-ui, sans-serif; pointer-events: none; }
   </style>
-<link rel="modulepreload" href="./wordcraft-web-bc9cdbc0b42827ee.js" crossorigin="anonymous" integrity="sha384-13MWN5y1Te2kPv6FIA79b9XEzVT+kENFnB8jPJCvpsrYr3TVPgTg5N9lA04oXUFM"><link rel="modulepreload" href="./snippets/eframe-d31a8450ea12dfc1/inline0.js" crossorigin="anonymous" integrity="sha384-uPZQ72BwgZ4v7Km6+UIFbkDDlt7ShGEsAVEHVN/+wZSGFhItJZB83iKMFQXauTSs"><link rel="preload" href="./wordcraft-web-bc9cdbc0b42827ee_bg.wasm" crossorigin="anonymous" integrity="sha384-EARP0IigCZ3m7rHNm5K0rSs8pTE8W4WdfZpDQp658vLAD47UKzdJoByJ6MazxTsO" as="fetch" type="application/wasm"></head>
+<link rel="modulepreload" href="./wordcraft-web-bc9cdbc0b42827ee.js" crossorigin="anonymous" integrity="sha384-13MWN5y1Te2kPv6FIA79b9XEzVT+kENFnB8jPJCvpsrYr3TVPgTg5N9lA04oXUFM"><link rel="modulepreload" href="./snippets/eframe-d31a8450ea12dfc1/inline0.js" crossorigin="anonymous" integrity="sha384-uPZQ72BwgZ4v7Km6+UIFbkDDlt7ShGEsAVEHVN/+wZSGFhItJZB83iKMFQXauTSs"><link rel="preload" href="./wordcraft-web-bc9cdbc0b42827ee_bg.wasm" crossorigin="anonymous" integrity="sha384-EARP0IigCZ3m7rHNm5K0rSs8pTE8W4WdfZpDQp658vLAD47UKzdJoByJ6MazxTsO" as="fetch" type="application/wasm">  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#e6e6e6">
+  <meta name="description" content="Word processing and document editor">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icon-256.svg">
+</head>
 <body>
   <canvas id="wordcraft_canvas"></canvas>
   <div id="wordcraft_loading">Loading WordCraft&hellip;</div>
+  <script>
+    // Offline support (PWA): the service worker caches the app's files.
+    if (!new URLSearchParams(location.search).has("nosw")) {
+      try {
+        if ("serviceWorker" in navigator && navigator.serviceWorker) {
+          navigator.serviceWorker.register("sw.js").catch((e) => console.warn("service worker:", e));
+        }
+      } catch (e) {
+        console.warn("service worker:", e);
+      }
+    }
+  </script>
 </body>
 </html>

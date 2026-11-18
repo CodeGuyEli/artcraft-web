@@ -37,7 +37,13 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
     #photocraft_stopped a { color: #ffffff; }
     #photocraft_stopped_detail { color: #b8b8b8; }
   </style>
-<link rel="modulepreload" href="./photocraft-web-boot-f1b57f4718fcff8.js" crossorigin="anonymous" integrity="sha384-A6dB9ouZEroLrkz4XqpwXA5kx/b007jE+60EbLLeqVXWEC2LxJ+jhGmunTax/seJ"><link rel="modulepreload" href="./snippets/eframe-d31a8450ea12dfc1/inline0.js" crossorigin="anonymous" integrity="sha384-uPZQ72BwgZ4v7Km6+UIFbkDDlt7ShGEsAVEHVN/+wZSGFhItJZB83iKMFQXauTSs"><link rel="preload" href="./photocraft-web-boot-f1b57f4718fcff8_bg.wasm" crossorigin="anonymous" integrity="sha384-jc/qOZ50+le05tY/Y+sRXN3FRRICCxZNdsUwl3lY86njhxHfcMYvn543CCOkWM8Z" as="fetch" type="application/wasm"></head>
+<link rel="modulepreload" href="./photocraft-web-boot-f1b57f4718fcff8.js" crossorigin="anonymous" integrity="sha384-A6dB9ouZEroLrkz4XqpwXA5kx/b007jE+60EbLLeqVXWEC2LxJ+jhGmunTax/seJ"><link rel="modulepreload" href="./snippets/eframe-d31a8450ea12dfc1/inline0.js" crossorigin="anonymous" integrity="sha384-uPZQ72BwgZ4v7Km6+UIFbkDDlt7ShGEsAVEHVN/+wZSGFhItJZB83iKMFQXauTSs"><link rel="preload" href="./photocraft-web-boot-f1b57f4718fcff8_bg.wasm" crossorigin="anonymous" integrity="sha384-jc/qOZ50+le05tY/Y+sRXN3FRRICCxZNdsUwl3lY86njhxHfcMYvn543CCOkWM8Z" as="fetch" type="application/wasm">  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#262626">
+  <meta name="description" content="Photo editing and processing in the browser">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icon-256.svg">
+</head>
 <body>
   <canvas id="photocraft_canvas"></canvas>
   <div id="photocraft_loading">
@@ -51,5 +57,17 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
     <p>Changes since the last save in this tab can't be recovered. <a href="">Reload</a> to start again.</p>
     <p id="photocraft_stopped_detail"></p>
   </div>
+  <script>
+    // Offline support (PWA): the service worker caches the app's files.
+    if (!new URLSearchParams(location.search).has("nosw")) {
+      try {
+        if ("serviceWorker" in navigator && navigator.serviceWorker) {
+          navigator.serviceWorker.register("sw.js").catch((e) => console.warn("service worker:", e));
+        }
+      } catch (e) {
+        console.warn("service worker:", e);
+      }
+    }
+  </script>
 </body>
 </html>

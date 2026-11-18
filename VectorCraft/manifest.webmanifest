@@ -1,0 +1,36 @@
+{
+  "name": "VectorCraft",
+  "short_name": "VectorCraft",
+  "description": "Vector graphics editor and illustration tool",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#262626",
+  "theme_color": "#262626",
+  "categories": [
+    "graphics",
+    "productivity",
+    "utilities"
+  ],
+  "icons": [
+    {
+      "src": "icons/ai.storyteller.vectorcraft.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/256/ai.storyteller.vectorcraft.png",
+      "sizes": "256x256",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/256/ai.storyteller.vectorcraft.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

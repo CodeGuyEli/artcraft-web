@@ -1,0 +1,57 @@
+// WordCraft service worker: the app works offline once loaded, and installs as an app.
+//
+// This service worker precaches all app files for offline use.
+// Version: 6afdd4dd
+const VERSION = "6afdd4dd";
+const FILES = [
+    "./",
+    "./index.html",
+    "./manifest.webmanifest",
+    "./favicon.svg",
+    "./icon-256.png",
+    "./icon-512.png",
+    "./wordcraft-web-bc9cdbc0b42827ee.js",
+    "./wordcraft-web-bc9cdbc0b42827ee_bg.wasm",
+    "./snippets/eframe-d31a8450ea12dfc1/inline0.js"
+];
+const CACHE = `wordcraft-${VERSION}`;
+
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches
+      .open(CACHE)
+      .then((c) => c.addAll(FILES.map((f) => new Request(f, { cache: "reload" }))))
+      .then(() => self.skipWaiting()),
+  );
+});
+
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches
+      .keys()
+      .then((keys) => Promise.all(keys.filter((k) => k.startsWith("wordcraft-") && k !== CACHE).map((k) => caches.delete(k))))
+      .then(() => self.clients.claim()),
+  );
+});
+
+self.addEventListener("fetch", (event) => {
+  const req = event.request;
+  const url = new URL(req.url);
+  if (req.method !== "GET" || url.origin !== self.location.origin) return;
+  // Skip config files that must stay live
+  if (url.pathname.endsWith("-config.json")) return;
+  event.respondWith(
+    (async () => {
+      const cache = await caches.open(CACHE).catch(() => null);
+      if (cache) {
+        // The page itself regardless of its query (?empty, ?demo...).
+        const key = req.mode === "navigate" ? new URL("./", self.registration.scope).href : req;
+        const hit = await cache.match(key, { ignoreSearch: req.mode === "navigate" }).catch(() => null);
+        if (hit) return hit;
+      }
+      const res = await fetch(req);
+      if (cache && res.ok && res.type === "basic") void cache.put(req, res.clone()).catch(() => {});
+      return res;
+    })(),
+  );
+});

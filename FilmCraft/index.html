@@ -26,6 +26,12 @@
     #fatal pre { max-height: 40vh; overflow: auto; white-space: pre-wrap; font-size: 12px; color: #c9c9cc; }
     #fatal button { font: inherit; padding: 6px 14px; border: 0; border-radius: 6px; background: #3b6fe0; color: #fff; cursor: pointer; }
   </style>
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#1b1c1f">
+  <meta name="description" content="Video editing and film production">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icon-256.svg">
 </head>
 <body>
   <canvas id="filmcraft_canvas"></canvas>
@@ -89,6 +95,18 @@
         if (s) { s.className = "err"; s.textContent = "FilmCraft failed to start:\n" + text; }
       }
       throw e;
+    }
+  </script>
+  <script>
+    // Offline support (PWA): the service worker caches the app's files.
+    if (!new URLSearchParams(location.search).has("nosw")) {
+      try {
+        if ("serviceWorker" in navigator && navigator.serviceWorker) {
+          navigator.serviceWorker.register("sw.js").catch((e) => console.warn("service worker:", e));
+        }
+      } catch (e) {
+        console.warn("service worker:", e);
+      }
     }
   </script>
 </body>

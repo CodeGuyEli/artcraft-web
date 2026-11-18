@@ -24,8 +24,26 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
       @media (prefers-color-scheme: dark) { html, body { background: #19191c; } }
     </style>
   <link rel="modulepreload" href="./pdfcraft-web-dbf16682ba914f2f.js" crossorigin="anonymous" integrity="sha384-3EU6LfMF3wq1uLfzCb/xMYmvJDvUZsR6e4kUHdxP0cacowYFcmg1qSEmCI16EqEL"><link rel="modulepreload" href="./snippets/eframe-d31a8450ea12dfc1/inline0.js" crossorigin="anonymous" integrity="sha384-uPZQ72BwgZ4v7Km6+UIFbkDDlt7ShGEsAVEHVN/+wZSGFhItJZB83iKMFQXauTSs"><link rel="preload" href="./pdfcraft-web-dbf16682ba914f2f_bg.wasm" crossorigin="anonymous" integrity="sha384-Kqxitk/XsOLwPoYde8X6CFcitLKwwKeN39afY9XxbaoRbd84FYioQAwGP+GUhbK9" as="fetch" type="application/wasm">  <meta name="pdfcraft-ocr-worker" content="./pdfcraft-ocr-worker-b363fe94bbdd0923_loader.js" />
-  </head>
+    <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#262626">
+  <meta name="description" content="PDF editing and processing tool">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icon-256.svg">
+</head>
   <body>
     <canvas id="pdfcraft"></canvas>
-  </body>
+    <script>
+    // Offline support (PWA): the service worker caches the app's files.
+    if (!new URLSearchParams(location.search).has("nosw")) {
+      try {
+        if ("serviceWorker" in navigator && navigator.serviceWorker) {
+          navigator.serviceWorker.register("sw.js").catch((e) => console.warn("service worker:", e));
+        }
+      } catch (e) {
+        console.warn("service worker:", e);
+      }
+    }
+  </script>
+</body>
 </html>

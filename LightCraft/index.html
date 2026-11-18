@@ -16,6 +16,12 @@
     }
     #lightcraft_status { position: absolute; left: 0; bottom: 0; width: 1px; height: 1px; overflow: hidden; }
   </style>
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#262626">
+  <meta name="description" content="Lighting design and visualization">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icon-256.svg">
 </head>
 <body>
   <canvas id="lightcraft_canvas"></canvas>
@@ -44,6 +50,18 @@
       const el = document.getElementById("lightcraft_loading");
       if (el) el.textContent = "LightCraft failed to load: " + e;
     });
+  </script>
+  <script>
+    // Offline support (PWA): the service worker caches the app's files.
+    if (!new URLSearchParams(location.search).has("nosw")) {
+      try {
+        if ("serviceWorker" in navigator && navigator.serviceWorker) {
+          navigator.serviceWorker.register("sw.js").catch((e) => console.warn("service worker:", e));
+        }
+      } catch (e) {
+        console.warn("service worker:", e);
+      }
+    }
   </script>
 </body>
 </html>
