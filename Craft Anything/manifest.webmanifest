@@ -8,29 +8,10 @@
   "display": "standalone",
   "background_color": "#0e0e0f",
   "theme_color": "#0e0e0f",
-  "categories": [
-    "graphics",
-    "productivity",
-    "utilities"
-  ],
+  "categories": ["graphics", "productivity", "utilities"],
   "icons": [
-    {
-      "src": "favicon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "icon-256.svg",
-      "sizes": "256x256",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "icon-512.svg",
-      "sizes": "512x512",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
-    }
+    { "src": "favicon.png", "sizes": "any", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-256.svg", "sizes": "256x256", "type": "image/svg+xml", "purpose": "any maskable" },
+    { "src": "icon-512.svg", "sizes": "512x512", "type": "image/svg+xml", "purpose": "any maskable" }
   ]
 }
